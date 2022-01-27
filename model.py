@@ -82,7 +82,8 @@ class Decoder(torch.nn.Module):
 class Transformer(torch.nn.Module):
     def __init__(self):
         super().__init__()
-        self.embed = PositionEmbedding()
+        self.embed_x = PositionEmbedding()
+        self.embed_y = PositionEmbedding()
         self.encoder = Encoder()
         self.decoder = Decoder()
         self.fc_out = torch.nn.Linear(32, 39)
@@ -95,7 +96,7 @@ class Transformer(torch.nn.Module):
         # 编码,添加位置信息
         # x = [b, 50] -> [b, 50, 32]
         # y = [b, 50] -> [b, 50, 32]
-        x, y = self.embed(x), self.embed(y)
+        x, y = self.embed_x(x), self.embed_y(y)
 
         # 编码层计算
         # [b, 50, 32] -> [b, 50, 32]
